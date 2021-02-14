@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnigmaApp", "src\EnigmaApp\EnigmaApp.csproj", "{C043F6CD-FB1F-4F2D-B1C9-092FE77B4623}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "tests\Test\Test.csproj", "{083F8BCC-5F14-4129-973B-CE409A4873F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Machine", "src\Machine\Machine.csproj", "{080E498E-9241-45D6-B3A8-EC6F23C28B9A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C043F6CD-FB1F-4F2D-B1C9-092FE77B4623}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C043F6CD-FB1F-4F2D-B1C9-092FE77B4623}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C043F6CD-FB1F-4F2D-B1C9-092FE77B4623}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C043F6CD-FB1F-4F2D-B1C9-092FE77B4623}.Release|Any CPU.Build.0 = Release|Any CPU
+		{083F8BCC-5F14-4129-973B-CE409A4873F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{083F8BCC-5F14-4129-973B-CE409A4873F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{083F8BCC-5F14-4129-973B-CE409A4873F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{083F8BCC-5F14-4129-973B-CE409A4873F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{080E498E-9241-45D6-B3A8-EC6F23C28B9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{080E498E-9241-45D6-B3A8-EC6F23C28B9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{080E498E-9241-45D6-B3A8-EC6F23C28B9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{080E498E-9241-45D6-B3A8-EC6F23C28B9A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {23982DB5-B6C4-41BD-B073-D48BEFA06E5E}
+	EndGlobalSection
+EndGlobal
