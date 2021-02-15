@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace Machine.Args
+namespace Machine.Machine_Classes
 {
     public class Plugboard
     {

@@ -56,11 +56,10 @@ namespace Machine.Machine_Classes
 
         private void SpinRotors()
         {
-            bool willNextOneSpin = true;
             for (int j = 2; j >= 0; j--)
             {
-                willNextOneSpin = 65 + _rotors[j].CurrentPosition == _rotors[j].SpinPoint;
                 _rotors[j].SpinRotor();
+                bool willNextOneSpin = 65 + _rotors[j].CurrentPosition == _rotors[j].SpinPoint;
                 if (!willNextOneSpin)
                 {
                     break;

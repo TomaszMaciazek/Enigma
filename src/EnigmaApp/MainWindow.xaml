@@ -5,8 +5,43 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EnigmaApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="Enigma" Height="720" Width="1280"
+        MinHeight="720" MinWidth="1280">
+    <Grid Background="#545454">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="501*"/>
+            <ColumnDefinition Width="773*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="4.5*"/>
+            <RowDefinition Height="0.5*"/>
+        </Grid.RowDefinitions>
+        <TextBlock 
+            Grid.Row="0" 
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center"
+            Foreground="White"
+            FontSize="40" Grid.Column="1" Margin="70.257,17,571.6,15.4"
+            >
+            Enigma
+        </TextBlock>
+        <StackPanel Orientation="Vertical" Grid.ColumnSpan="2" Margin="0,86,-0.4,0.2" Grid.RowSpan="2">
+            <StackPanel Orientation="Horizontal">
+
+            </StackPanel>
+        </StackPanel>
+        <Grid 
+            Grid.Row="2"
+            Background="#DDD" Grid.ColumnSpan="2" Margin="0,387.8,-0.4,0.4" Grid.RowSpan="2"
+        >
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                >Created by Tomasz Maciążek
+            </TextBlock>
+        </Grid>
     </Grid>
 </Window>

@@ -65,7 +65,7 @@ namespace Test
         [Test]
         public void ForbidenValueInConfigurationTest()
         {
-            Assert.Throws<ForbiddenParameterValueException>(() 
+            Assert.Throws<ForbiddenParameterValueException>(()
                 => new SpinningRotor(RotorNumber.One, 26));
         }
     }

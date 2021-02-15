@@ -4,7 +4,6 @@ using Machine.Machine_Classes;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Test
 {
@@ -12,27 +11,14 @@ namespace Test
     public class MachineTest
     {
         private IEnigmaMachine _machine;
-
+        private IList<MachineArgs> _args;
         [SetUp]
         public void SetUp()
         {
             _machine = new EnigmaMachine();
-        }
-
-        [TestCaseSource("TestCasesEncode")]
-        public void EncodeStringTest(MachineArgs args, string first, string second)
-        {
-            _machine.ConfigureMachine(args);
-            Assert.AreEqual(second, _machine.EncodeString(first));
-            _machine.ConfigureMachine(args);
-            Assert.AreEqual(first, _machine.EncodeString(second));
-        }
-
-        public static IEnumerable<TestCaseData> TestCasesEncode
-        {
-            get
+            _args = new List<MachineArgs>()
             {
-                yield return new TestCaseData(new MachineArgs {
+                new MachineArgs {
                     RotorOneArgs = new RotorArgs
                     {
                         Number = RotorNumber.One,
@@ -49,9 +35,8 @@ namespace Test
                         StartPosition = 15
                     },
                     LettersToSwap = new List<Tuple<char,char>>()
-                },"ABCDEFG", "EKDTDWB"
-                );
-                yield return new TestCaseData(new MachineArgs
+                },
+                new MachineArgs
                 {
                     RotorOneArgs = new RotorArgs
                     {
@@ -68,12 +53,12 @@ namespace Test
                         Number = RotorNumber.Three,
                         StartPosition = 1
                     },
-                    LettersToSwap = new List<Tuple<char, char>>() { 
+                    LettersToSwap = new List<Tuple<char, char>>() {
                         new Tuple<char, char>('A','E'),
                         new Tuple<char, char>('G','K')
                     }
-                },"ALAXMAXKOTA", "SDJSDNQWFZJ");
-                yield return new TestCaseData(new MachineArgs
+                },
+                new MachineArgs
                 {
                     RotorOneArgs = new RotorArgs
                     {
@@ -93,10 +78,22 @@ namespace Test
                     LettersToSwap = new List<Tuple<char, char>>() {
                         new Tuple<char, char>('C','F'),
                         new Tuple<char, char>('E','T'),
-                        new Tuple<char, char>('P','E')
+                        new Tuple<char, char>('P','L')
                     }
-                }, "TOMEKXPIEKLXCHLEBXWXPIATEK", "ZTYNBTMNFEAAFPXYRBIHHYCNID");
-            }
+                }
+            };
+        }
+
+        [TestCase(0, "ABCDEFG", "EKDTDWB")]
+        [TestCase(0, "EKDTDWB", "ABCDEFG")]
+        [TestCase(1, "ALAXMAXKOTA", "UUYFIMBFYWP")]
+        [TestCase(1, "UUYFIMBFYWP", "ALAXMAXKOTA")]
+        [TestCase(2, "TOMEKXPIEKLXCHLEBXWXPIATEK", "SEYWBEHNVTJAFLBSRBIHSYFBFD")]
+        [TestCase(2, "SEYWBEHNVTJAFLBSRBIHSYFBFD", "TOMEKXPIEKLXCHLEBXWXPIATEK")]
+        public void EncodeStringTest(int argsIndex, string first, string second)
+        {
+            _machine.ConfigureMachine(_args[argsIndex]);
+            Assert.AreEqual(second, _machine.EncodeString(first));
         }
     }
 }
