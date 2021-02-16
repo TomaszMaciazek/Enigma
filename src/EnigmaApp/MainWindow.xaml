@@ -7,39 +7,573 @@
         mc:Ignorable="d"
         Title="Enigma" Height="720" Width="1280"
         MinHeight="720" MinWidth="1280">
-    <Grid Background="#545454">
+    <Window.Resources>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="#ddd" />
+            <Setter Property="Margin" Value="10 5" />
+            <Setter Property="Padding" Value="10"/>
+        </Style>
+        <Style x:Key="TextBoxStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="#d5e66e" />
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Margin" Value="10 5"/>
+        </Style>
+        <Style x:Key="ArrowButtonStyle" TargetType="Button">
+            <Setter Property="FontFamily" Value="Marlett"/>
+            <Setter Property="FontSize" Value="30"/>
+        </Style>
+        <ControlTemplate x:Key = "ButtonTemplate" TargetType = "Button">
+            <Grid>
+                <Ellipse 
+                    x:Name = "ButtonMainEllipse" 
+                    Height = "40" Width = "40" 
+                    Fill="#333"
+                    Stroke="#000000"
+                    >
+                </Ellipse>
+                <Ellipse 
+                    x:Name = "ButtonSecondEllipse" 
+                    Margin="5"
+                    Height = "30" Width = "30" 
+                    Fill="#555"
+                    >
+                </Ellipse>
+
+                <ContentPresenter
+                    Content = "{TemplateBinding Content}" 
+                    HorizontalAlignment = "Center"
+                    VerticalAlignment = "Center"
+                />
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property = "IsMouseOver" Value = "True">
+                    <Setter TargetName = "ButtonMainEllipse" Property = "Fill" >
+                        <Setter.Value>
+                            <SolidColorBrush Color="#555"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter TargetName = "ButtonSecondEllipse" Property = "Fill" >
+                        <Setter.Value>
+                            <SolidColorBrush Color="#777"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+
+            </ControlTemplate.Triggers>
+
+        </ControlTemplate>
+    </Window.Resources>
+    <Grid Background="#444">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="501*"/>
-            <ColumnDefinition Width="773*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="4.5*"/>
-            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="2.7*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="0.3*"/>
         </Grid.RowDefinitions>
-        <TextBlock 
-            Grid.Row="0" 
-            HorizontalAlignment="Center" 
-            VerticalAlignment="Center"
-            Foreground="White"
-            FontSize="40" Grid.Column="1" Margin="70.257,17,571.6,15.4"
+        <Grid
+            Grid.Row="0"
+            Grid.Column="0"
+        >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="6*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="4*"/>
+            </Grid.RowDefinitions>
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Text="Ustawienia wirników"
+                Foreground="#fff"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="24"
+            />
+            <TextBlock 
+                Grid.Row="0"
+                Grid.Column="1"
+                Text="Ustawienia łącznicy kablowej"
+                Foreground="#fff"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="24"
+            />
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Horizontal"    
             >
-            Enigma
-        </TextBlock>
-        <StackPanel Orientation="Vertical" Grid.ColumnSpan="2" Margin="0,86,-0.4,0.2" Grid.RowSpan="2">
-            <StackPanel Orientation="Horizontal">
-
+                <StackPanel
+                    Orientation="Vertical"
+                    Background="#e6e3dc"
+                >
+                    <Border
+                        Padding="5"
+                        Background="#a5a5a5"
+                    >
+                        <StackPanel
+                        Orientation="Horizontal"
+                        Background="#a2a39d"
+                        >
+                            <Button
+                                Width="30"
+                                x:Name="DecrementFirstRotorNumber"
+                                Click="DecrementFirstRotorNumber_Click"
+                                Style="{StaticResource ArrowButtonStyle}"
+                                Content="3"
+                                Height="30"
+                            
+                            />
+                            <TextBlock
+                                Margin="5 0"
+                                Background="#fff"
+                                x:Name="FirstRotorNumber"
+                                FontSize="12"
+                                Text="I"
+                                TextAlignment="Center"
+                                VerticalAlignment="Center"
+                                Height="30"
+                                Width="30"
+                                Padding="7"
+                             />
+                            <Button
+                                Width="30"
+                                x:Name="IncrementFirstRotorNumber"
+                                Click="IncrementFirstRotorNumber_Click"
+                                Style="{StaticResource ArrowButtonStyle}"
+                                Content="4"
+                                Height="30"
+                            />
+                        </StackPanel>
+                    </Border>
+                    <Button 
+                        x:Name="IncrementFirstRotorPosition"
+                        Click="IncrementFirstRotorPosition_Click"
+                        Margin="10"
+                        Style="{StaticResource ArrowButtonStyle}"
+                        Content="5"
+                        Height="40"
+                        Width="40"
+                    />
+                    <Border
+                        HorizontalAlignment="Center"
+                        BorderBrush="#000"
+                        BorderThickness="1"
+                        Width="40"
+                        Height="40"
+                        >
+                        <TextBlock
+                            x:Name="FirstRotorPosition"
+                            Text="A"
+                            Width="40"
+                            Height="40"
+                            TextAlignment="Center"
+                            Padding="5"
+                            FontSize="20"
+                            Background="#fff"
+                        />
+                    </Border>
+                    <Button 
+                        x:Name="DecrementFirstRotorPosition"
+                        Click="DecrementFirstRotorPosition_Click"
+                        Margin="10"
+                        Style="{StaticResource ArrowButtonStyle}"
+                        Content="6"
+                        Height="40"
+                        Width="40"
+                    />
+                </StackPanel>
+                <StackPanel
+                    Orientation="Vertical"
+                    Background="#e6e3dc"
+                >
+                    <Border
+                        Padding="5"
+                        Background="#a5a5a5"
+                    >
+                        <StackPanel
+                        Orientation="Horizontal"
+                        Background="#a2a39d"
+                        >
+                            <Button
+                                Width="30"
+                                x:Name="DecrementSecondRotorNumber"
+                                Click="DecrementSecondRotorNumber_Click"
+                                Style="{StaticResource ArrowButtonStyle}"
+                                Content="3"
+                                Height="30"
+                            
+                            />
+                            <TextBlock
+                                Margin="5 0"
+                                Background="#fff"
+                                x:Name="SecondRotorNumber"
+                                FontSize="12"
+                                Text="II"
+                                TextAlignment="Center"
+                                VerticalAlignment="Center"
+                                Height="30"
+                                Width="30"
+                                Padding="7"
+                             />
+                            <Button
+                                Width="30"
+                                x:Name="IncrementSecondRotorNumber"
+                                Click="IncrementSecondRotorNumber_Click"
+                                Style="{StaticResource ArrowButtonStyle}"
+                                Content="4"
+                                Height="30"
+                            />
+                        </StackPanel>
+                    </Border>
+                    <Button 
+                        x:Name="IncrementSecondRotorPosition"
+                        Click="IncrementSecondRotorPosition_Click"
+                        Margin="10"
+                        Style="{StaticResource ArrowButtonStyle}"
+                        Content="5"
+                        Height="40"
+                        Width="40"
+                    />
+                    <Border
+                        HorizontalAlignment="Center"
+                        BorderBrush="#000"
+                        BorderThickness="1"
+                        Width="40"
+                        Height="40"
+                        >
+                        <TextBlock
+                            x:Name="SecondRotorPosition"
+                            Text="A"
+                            Width="40"
+                            Height="40"
+                            TextAlignment="Center"
+                            Padding="5"
+                            FontSize="20"
+                            Background="#fff"
+                        />
+                    </Border>
+                    <Button 
+                        x:Name="DecrementSecondRotorPosition"
+                        Click="DecrementSecondRotorPosition_Click"
+                        Margin="10"
+                        Style="{StaticResource ArrowButtonStyle}"
+                        Content="6"
+                        Height="40"
+                        Width="40"
+                    />
+                </StackPanel>
+                <StackPanel
+                    Orientation="Vertical"
+                    Background="#e6e3dc"
+                >
+                    <Border
+                        Padding="5"
+                        Background="#a5a5a5"
+                    >
+                        <StackPanel
+                        Orientation="Horizontal"
+                        Background="#a2a39d"
+                        >
+                            <Button
+                                Width="30"
+                                x:Name="DecrementThirdRotorNumber"
+                                Click="DecrementThirdRotorNumber_Click"
+                                Style="{StaticResource ArrowButtonStyle}"
+                                Content="3"
+                                Height="30"
+                            
+                            />
+                            <TextBlock
+                                Margin="5 0"
+                                Background="#fff"
+                                x:Name="ThirdRotorNumber"
+                                FontSize="12"
+                                Text="III"
+                                TextAlignment="Center"
+                                VerticalAlignment="Center"
+                                Height="30"
+                                Width="30"
+                                Padding="7"
+                             />
+                            <Button
+                                Width="30"
+                                x:Name="IncrementThirdRotorNumber"
+                                Click="IncrementThirdRotorNumber_Click"
+                                Style="{StaticResource ArrowButtonStyle}"
+                                Content="4"
+                                Height="30"
+                            />
+                        </StackPanel>
+                    </Border>
+                    <Button 
+                        x:Name="IncrementThirdRotorPosition"
+                        Click="IncrementThirdRotorPosition_Click"
+                        Margin="10"
+                        Style="{StaticResource ArrowButtonStyle}"
+                        Content="5"
+                        Height="40"
+                        Width="40"
+                    />
+                    <Border
+                        HorizontalAlignment="Center"
+                        BorderBrush="#000"
+                        BorderThickness="1"
+                        Width="40"
+                        Height="40"
+                        >
+                        <TextBlock
+                            x:Name="ThirdRotorPosition"
+                            Text="A"
+                            Width="40"
+                            Height="40"
+                            TextAlignment="Center"
+                            Padding="5"
+                            FontSize="20"
+                            Background="#fff"
+                        />
+                    </Border>
+                    <Button 
+                        x:Name="DecrementThirdRotorPosition"
+                        Click="DecrementThirdRotorPosition_Click"
+                        Margin="10"
+                        Style="{StaticResource ArrowButtonStyle}"
+                        Content="6"
+                        Height="40"
+                        Width="40"
+                    />
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Vertical"
+            >
+                <StackPanel Orientation="Horizontal">
+                    <Button
+                        Click="PlugboardButton_Click"
+                        Style="{StaticResource ButtonStyle}"
+                        Template="{StaticResource ButtonTemplate}"
+                        Content="Q"
+                    />
+                    <Button 
+                        Style="{StaticResource ButtonStyle}"
+                        Template="{StaticResource ButtonTemplate}"
+                        Content="W"
+                    />
+                    <Button 
+                        Style="{StaticResource ButtonStyle}"
+                        Template="{StaticResource ButtonTemplate}"
+                        Content="E"
+                    />
+                    <Button 
+                        Style="{StaticResource ButtonStyle}"
+                        Template="{StaticResource ButtonTemplate}"
+                        Content="R"
+                    />
+                    <Button 
+                        Style="{StaticResource ButtonStyle}"
+                        Template="{StaticResource ButtonTemplate}"
+                        Content="T"
+                    />
+                    <Button 
+                        Style="{StaticResource ButtonStyle}"
+                        Template="{StaticResource ButtonTemplate}"
+                        Content="Z"
+                    />
+                    <Button 
+                        Style="{StaticResource ButtonStyle}"
+                        Template="{StaticResource ButtonTemplate}"
+                        Content="U"
+                    />
+                    <Button 
+                        Style="{StaticResource ButtonStyle}"
+                        Template="{StaticResource ButtonTemplate}"
+                        Content="I"
+                    />
+                    <Button 
+                        Style="{StaticResource ButtonStyle}"
+                        Template="{StaticResource ButtonTemplate}"
+                        Content="O"
+                    />
+                </StackPanel>
+                <StackPanel
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"    
+                    >
+                    <Button 
+                        Style="{StaticResource ButtonStyle}"
+                        Template="{StaticResource ButtonTemplate}"
+                        Content="A"
+                    />
+                    <Button 
+                        Style="{StaticResource ButtonStyle}"
+                        Template="{StaticResource ButtonTemplate}"
+                        Content="S"
+                    />
+                    <Button 
+                        Style="{StaticResource ButtonStyle}"
+                        Template="{StaticResource ButtonTemplate}"
+                        Content="D"
+                    />
+                    <Button 
+                        Style="{StaticResource ButtonStyle}"
+                        Template="{StaticResource ButtonTemplate}"
+                        Content="F"
+                    />
+                    <Button 
+                        Style="{StaticResource ButtonStyle}"
+                        Template="{StaticResource ButtonTemplate}"
+                        Content="G"
+                    />
+                    <Button 
+                        Style="{StaticResource ButtonStyle}"
+                        Template="{StaticResource ButtonTemplate}"
+                        Content="H"
+                    />
+                    <Button 
+                        Style="{StaticResource ButtonStyle}"
+                        Template="{StaticResource ButtonTemplate}"
+                        Content="J"
+                    />
+                    <Button 
+                        Style="{StaticResource ButtonStyle}"
+                        Template="{StaticResource ButtonTemplate}"
+                        Content="K"
+                    />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button 
+                        Style="{StaticResource ButtonStyle}"
+                        Template="{StaticResource ButtonTemplate}"
+                        Content="P"
+                    />
+                    <Button 
+                        Style="{StaticResource ButtonStyle}"
+                        Template="{StaticResource ButtonTemplate}"
+                        Content="Y"
+                    />
+                    <Button 
+                        Style="{StaticResource ButtonStyle}"
+                        Template="{StaticResource ButtonTemplate}"
+                        Content="X"
+                    />
+                    <Button 
+                        Style="{StaticResource ButtonStyle}"
+                        Template="{StaticResource ButtonTemplate}"
+                        Content="C"
+                    />
+                    <Button 
+                        Style="{StaticResource ButtonStyle}"
+                        Template="{StaticResource ButtonTemplate}"
+                        Content="V"
+                    />
+                    <Button 
+                        Style="{StaticResource ButtonStyle}"
+                        Template="{StaticResource ButtonTemplate}"
+                        Content="B"
+                    />
+                    <Button 
+                        Style="{StaticResource ButtonStyle}"
+                        Template="{StaticResource ButtonTemplate}"
+                        Content="N"
+                    />
+                    <Button 
+                        Style="{StaticResource ButtonStyle}"
+                        Template="{StaticResource ButtonTemplate}"
+                        Content="M"
+                    />
+                    <Button 
+                        Style="{StaticResource ButtonStyle}"
+                        Template="{StaticResource ButtonTemplate}"
+                        Content="L"
+                    />
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border
+                Grid.Row="0"
+                Grid.Column="0"
+                Padding="20"
+            >
+                <TextBox 
+                    x:Name="NotEncodedText"
+                    Style="{StaticResource TextBoxStyle}"
+                >
+                    <TextBox.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </TextBox.Resources>
+                </TextBox>
+            </Border>
+            <Border
+                Padding="5"
+                Grid.Column="1"
+                Grid.Row="0"
+            >
+                <Button 
+                    x:Name="EncodeButton" Click="EncodeButton_Click"
+                    MaxHeight="40"
+                    HorizontalAlignment="Center"
+                    Content="Szyfruj"
+                    Background="#05b3f7"
+                    Foreground="#fff"
+                    MinWidth="80"
+                >
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="5"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </Border>
+            <Border
+                Grid.Row="0"
+                Grid.Column="2"
+                Padding="20"
+            >
+                <TextBox 
+                    x:Name="EncodedText"
+                    IsReadOnly="True"
+                    Style="{StaticResource TextBoxStyle}"
+                >
+                    <TextBox.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </TextBox.Resources>
+                </TextBox>
+            </Border>
+        </Grid>
         <Grid 
             Grid.Row="2"
-            Background="#DDD" Grid.ColumnSpan="2" Margin="0,387.8,-0.4,0.4" Grid.RowSpan="2"
+            Grid.Column="0"
+            Background="#DDD"
         >
             <TextBlock
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontSize="16"
+                FontWeight="Bold"
                 >Created by Tomasz Maciążek
             </TextBlock>
         </Grid>
