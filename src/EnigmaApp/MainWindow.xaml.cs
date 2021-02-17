@@ -1,19 +1,14 @@
-﻿using Machine.Interfaces;
+﻿using Machine.Args;
+using Machine.Interfaces;
 using Machine.Machine_Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace EnigmaApp
 {
@@ -26,20 +21,83 @@ namespace EnigmaApp
 
         private string _availableLetters;
 
-        private char _awaitingForPair;
+        private Button _awaitingForPair;
 
-        private readonly ICollection<Tuple<char, char>> _pairs;
+        private readonly IDictionary<int, Tuple<Button, Button>> _pairs;
+
+        private readonly IDictionary<int, string> _colors;
+
+        private int _colorPosition;
+
         public MainWindow()
         {
             InitializeComponent();
             _machine = new EnigmaMachine();
             _availableLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            _pairs = new Dictionary<int, Tuple<Button, Button>>();
+            _colors = new Dictionary<int, string>() {
+                { 0, "#555555" },
+                { 1, "#f72338" },
+                { 2, "#22f03a" },
+                { 3, "#13e8e8" },
+                { 4, "#eaff61" },
+                { 5, "#b14df0" },
+                { 6, "#f7b543" },
+                { 7, "#2e990b" },
+                { 8, "#7a0006" },
+                { 9, "#090269" },
+                { 10, "#808a5a" },
+                { 11, "#411059" },
+                { 12, "#73470a" },
+                { 13, "#ff29db" }
+            };
+            _colorPosition = 1;
         }
 
         private void EncodeButton_Click(object sender, RoutedEventArgs e)
         {
-            EncodedText.Text = _machine.EncodeString(NotEncodedText.Text);
+            if (_awaitingForPair != null)
+            {
+                MessageBox.Show("One letter in plugboard is not connected to another");
+            }
+            else
+            {
+                var firstRotorNumber = GetRotorNumber(FirstRotorNumber.Text);
+                var firstRotorPosition = Convert.ToByte(FirstRotorPosition.Text[0] - 65);
+                var secondRotorNumber = GetRotorNumber(SecondRotorNumber.Text);
+                var secondRotorPosition = Convert.ToByte(SecondRotorPosition.Text[0] - 65);
+                var thirdRotorNumber = GetRotorNumber(ThirdRotorNumber.Text);
+                var thirdRotorPosition = Convert.ToByte(ThirdRotorPosition.Text[0] - 65);
+                var lettersToSwap = new List<Tuple<char, char>>();
+                foreach (var pair in _pairs)
+                {
+                    lettersToSwap.Add(new Tuple<char, char>(pair.Value.Item1.Content.ToString()[0], pair.Value.Item2.Content.ToString()[0]));
+                }
+                var args = new MachineArgs
+                {
+                    RotorOneArgs = new RotorArgs
+                    {
+                        Number = firstRotorNumber,
+                        StartPosition = firstRotorPosition
+                    },
+                    RotorTwoArgs = new RotorArgs
+                    {
+                        Number = secondRotorNumber,
+                        StartPosition = secondRotorPosition
+                    },
+                    RotorThreeArgs = new RotorArgs
+                    {
+                        Number = thirdRotorNumber,
+                        StartPosition = thirdRotorPosition
+                    },
+                    LettersToSwap = lettersToSwap
+                };
+                _machine.ConfigureMachine(args);
+                EncodedText.Text = _machine.EncodeString(NotEncodedText.Text.ToUpper());
+            }
         }
+
+        #region ArrowButtonsClickEventMethods
 
         private void DecrementFirstRotorNumber_Click(object sender, RoutedEventArgs e)
         {
@@ -101,6 +159,8 @@ namespace EnigmaApp
             ThirdRotorPosition.Text = GetIncrementedRotorPosition(ThirdRotorPosition.Text[0]).ToString();
         }
 
+        #endregion
+
         private string GetIncrementedRotorNumber(string rotorNumber)
         {
             var result = string.Empty;
@@ -156,7 +216,7 @@ namespace EnigmaApp
 
         private char GetDecrementedRotorPosition(char position)
         {
-            return position == 'A' ? 'Z' : (char)(position-1);
+            return position == 'A' ? 'Z' : (char)(position - 1);
         }
 
         private void PlugboardButton_Click(object sender, RoutedEventArgs e)
@@ -165,32 +225,101 @@ namespace EnigmaApp
             var letter = button.Content.ToString()[0];
             if (_availableLetters.Contains(letter))
             {
+                button.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom(_colors[_colorPosition]));
                 if (_availableLetters.Length % 2 == 0)
                 {
-                    if (_availableLetters.Contains(letter))
-                    {
-                        _awaitingForPair = letter;
-                    }
+                    _awaitingForPair = button;
                 }
                 else
                 {
-
-                    var pair = new Tuple<char, char>(_awaitingForPair, letter);
-                    _pairs.Add(pair);
+                    var pair = new Tuple<Button, Button>(_awaitingForPair, button);
+                    _pairs.Add(_colorPosition, pair);
+                    _awaitingForPair = null;
+                    _colorPosition = _pairs.Count + 1;
                 }
                 int index = _availableLetters.IndexOf(letter);
-                _availableLetters.Remove(index);
+                _availableLetters = _availableLetters.Remove(index, 1);
             }
             else
             {
-                var pair = FindPairWithGivenLetter(letter);
-                StringBuilder builder = new StringBuilder(_availableLetters + pair.Item1 + pair.Item2);
-                _availableLetters = builder.ToString();
+                var pair = FindPairWithGivenButton(button);
+                if (pair.Value == null)
+                {
+                    _awaitingForPair = null;
+                    button.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom(_colors[0]));
+                }
+                else
+                {
+                    pair.Value.Item1.Background = pair.Value.Item2.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom(_colors[0]));
+                    _colorPosition = pair.Key;
+                    StringBuilder builder =
+                    new StringBuilder(_availableLetters + pair.Value.Item1.Content.ToString() + pair.Value.Item2.Content.ToString());
+                    _availableLetters = builder.ToString();
+                    _pairs.Remove(pair.Key);
+                }
             }
         }
 
-        private Tuple<char, char> FindPairWithGivenLetter(char letter)
-            => _pairs.Where(x => x.Item1 == letter || x.Item2 == letter).SingleOrDefault();
+        private KeyValuePair<int, Tuple<Button, Button>> FindPairWithGivenButton(Button button)
+            => _pairs.Where(x => x.Value.Item1 == button || x.Value.Item2 == button).SingleOrDefault();
 
+
+        private RotorNumber GetRotorNumber(string number)
+        {
+            RotorNumber result = RotorNumber.One;
+            switch (number)
+            {
+                case "I":
+                    result = RotorNumber.One;
+                    break;
+                case "II":
+                    result = RotorNumber.Two;
+                    break;
+                case "III":
+                    result = RotorNumber.Three;
+                    break;
+                case "IV":
+                    result = RotorNumber.Four;
+                    break;
+                case "V":
+                    result = RotorNumber.Five;
+                    break;
+            }
+            return result;
+        }
+
+        private void ResetButton_Click(object sender, RoutedEventArgs e)
+        {
+            NotEncodedText.Text = String.Empty;
+            EncodedText.Text = String.Empty;
+            FirstRotorNumber.Text = "I";
+            SecondRotorNumber.Text = "II";
+            ThirdRotorNumber.Text = "III";
+            FirstRotorPosition.Text = "A";
+            SecondRotorPosition.Text = "A";
+            ThirdRotorPosition.Text = "A";
+            _availableLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            if (_awaitingForPair != null)
+            {
+                _awaitingForPair.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom(_colors[0]));
+                _awaitingForPair = null;
+            }
+            foreach (var pair in _pairs)
+            {
+                pair.Value.Item1.Background = pair.Value.Item2.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom(_colors[0]));
+            }
+            _pairs.Clear();
+            _colorPosition = 1;
+        }
+
+        private void NotEncodedText_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            
+            e.Handled = !Regex.IsMatch(e.Text, @"^[a-zA-Z0-9 \n\r]+$");
+            if (e.Handled)
+            {
+                MessageBox.Show("Not allowed character");
+            }
+        }
     }
 }

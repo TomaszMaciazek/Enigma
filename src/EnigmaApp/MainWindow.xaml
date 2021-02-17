@@ -12,11 +12,20 @@
             <Setter Property="Foreground" Value="#ddd" />
             <Setter Property="Margin" Value="10 5" />
             <Setter Property="Padding" Value="10"/>
+            <Setter Property="Background" Value="#555"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#000"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
         <Style x:Key="TextBoxStyle" TargetType="TextBox">
             <Setter Property="Background" Value="#d5e66e" />
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="Margin" Value="10 5"/>
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="AcceptsReturn" Value="True"/>
         </Style>
         <Style x:Key="ArrowButtonStyle" TargetType="Button">
             <Setter Property="FontFamily" Value="Marlett"/>
@@ -35,7 +44,7 @@
                     x:Name = "ButtonSecondEllipse" 
                     Margin="5"
                     Height = "30" Width = "30" 
-                    Fill="#555"
+                    Fill="{TemplateBinding Background}"
                     >
                 </Ellipse>
 
@@ -54,7 +63,7 @@
                     </Setter>
                     <Setter TargetName = "ButtonSecondEllipse" Property = "Fill" >
                         <Setter.Value>
-                            <SolidColorBrush Color="#777"/>
+                            <SolidColorBrush Color="#fff"/>
                         </Setter.Value>
                     </Setter>
                 </Trigger>
@@ -68,16 +77,16 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2.7*"/>
+            <RowDefinition Height="2*"/>
             <RowDefinition Height="3*"/>
             <RowDefinition Height="0.3*"/>
         </Grid.RowDefinitions>
         <Grid
             Grid.Row="0"
-            Grid.Column="0"
+            Grid.Column="0" Margin="0,2,-0.4,388.2" Grid.RowSpan="2"
         >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="5*"/>
                 <ColumnDefinition Width="6*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -87,7 +96,7 @@
             <TextBlock
                 Grid.Row="0"
                 Grid.Column="0"
-                Text="Ustawienia wirników"
+                Text="Initial rotors settings"
                 Foreground="#fff"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
@@ -96,7 +105,7 @@
             <TextBlock 
                 Grid.Row="0"
                 Grid.Column="1"
-                Text="Ustawienia łącznicy kablowej"
+                Text="Plugboard connections"
                 Foreground="#fff"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
@@ -364,42 +373,50 @@
                         Template="{StaticResource ButtonTemplate}"
                         Content="Q"
                     />
-                    <Button 
+                    <Button
+                        Click="PlugboardButton_Click"
                         Style="{StaticResource ButtonStyle}"
                         Template="{StaticResource ButtonTemplate}"
                         Content="W"
                     />
                     <Button 
+                        Click="PlugboardButton_Click"
                         Style="{StaticResource ButtonStyle}"
                         Template="{StaticResource ButtonTemplate}"
                         Content="E"
                     />
                     <Button 
+                        Click="PlugboardButton_Click"
                         Style="{StaticResource ButtonStyle}"
                         Template="{StaticResource ButtonTemplate}"
                         Content="R"
                     />
                     <Button 
+                        Click="PlugboardButton_Click"
                         Style="{StaticResource ButtonStyle}"
                         Template="{StaticResource ButtonTemplate}"
                         Content="T"
                     />
                     <Button 
+                        Click="PlugboardButton_Click"
                         Style="{StaticResource ButtonStyle}"
                         Template="{StaticResource ButtonTemplate}"
                         Content="Z"
                     />
                     <Button 
+                        Click="PlugboardButton_Click"
                         Style="{StaticResource ButtonStyle}"
                         Template="{StaticResource ButtonTemplate}"
                         Content="U"
                     />
                     <Button 
+                        Click="PlugboardButton_Click"
                         Style="{StaticResource ButtonStyle}"
                         Template="{StaticResource ButtonTemplate}"
                         Content="I"
                     />
                     <Button 
+                        Click="PlugboardButton_Click"
                         Style="{StaticResource ButtonStyle}"
                         Template="{StaticResource ButtonTemplate}"
                         Content="O"
@@ -413,41 +430,49 @@
                         Style="{StaticResource ButtonStyle}"
                         Template="{StaticResource ButtonTemplate}"
                         Content="A"
+                        Click="PlugboardButton_Click"
                     />
                     <Button 
                         Style="{StaticResource ButtonStyle}"
                         Template="{StaticResource ButtonTemplate}"
                         Content="S"
+                        Click="PlugboardButton_Click"
                     />
                     <Button 
                         Style="{StaticResource ButtonStyle}"
                         Template="{StaticResource ButtonTemplate}"
                         Content="D"
+                        Click="PlugboardButton_Click"
                     />
                     <Button 
                         Style="{StaticResource ButtonStyle}"
                         Template="{StaticResource ButtonTemplate}"
                         Content="F"
+                        Click="PlugboardButton_Click"
                     />
                     <Button 
                         Style="{StaticResource ButtonStyle}"
                         Template="{StaticResource ButtonTemplate}"
                         Content="G"
+                        Click="PlugboardButton_Click"
                     />
                     <Button 
                         Style="{StaticResource ButtonStyle}"
                         Template="{StaticResource ButtonTemplate}"
                         Content="H"
+                        Click="PlugboardButton_Click"
                     />
                     <Button 
                         Style="{StaticResource ButtonStyle}"
                         Template="{StaticResource ButtonTemplate}"
                         Content="J"
+                        Click="PlugboardButton_Click"
                     />
                     <Button 
                         Style="{StaticResource ButtonStyle}"
                         Template="{StaticResource ButtonTemplate}"
                         Content="K"
+                        Click="PlugboardButton_Click"
                     />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
@@ -455,68 +480,93 @@
                         Style="{StaticResource ButtonStyle}"
                         Template="{StaticResource ButtonTemplate}"
                         Content="P"
+                        Click="PlugboardButton_Click"
                     />
                     <Button 
                         Style="{StaticResource ButtonStyle}"
                         Template="{StaticResource ButtonTemplate}"
                         Content="Y"
+                        Click="PlugboardButton_Click"
                     />
                     <Button 
                         Style="{StaticResource ButtonStyle}"
                         Template="{StaticResource ButtonTemplate}"
                         Content="X"
+                        Click="PlugboardButton_Click"
                     />
                     <Button 
                         Style="{StaticResource ButtonStyle}"
                         Template="{StaticResource ButtonTemplate}"
                         Content="C"
+                        Click="PlugboardButton_Click"
                     />
                     <Button 
                         Style="{StaticResource ButtonStyle}"
                         Template="{StaticResource ButtonTemplate}"
                         Content="V"
+                        Click="PlugboardButton_Click"
                     />
                     <Button 
                         Style="{StaticResource ButtonStyle}"
                         Template="{StaticResource ButtonTemplate}"
                         Content="B"
+                        Click="PlugboardButton_Click"
                     />
                     <Button 
                         Style="{StaticResource ButtonStyle}"
                         Template="{StaticResource ButtonTemplate}"
                         Content="N"
+                        Click="PlugboardButton_Click"
                     />
                     <Button 
                         Style="{StaticResource ButtonStyle}"
                         Template="{StaticResource ButtonTemplate}"
                         Content="M"
+                        Click="PlugboardButton_Click"
                     />
                     <Button 
                         Style="{StaticResource ButtonStyle}"
                         Template="{StaticResource ButtonTemplate}"
                         Content="L"
+                        Click="PlugboardButton_Click"
                     />
                 </StackPanel>
             </StackPanel>
         </Grid>
-        <Grid Grid.Row="1" Grid.Column="0">
+        <Grid 
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="10"
+        >
             <Grid.ColumnDefinitions>
-
-                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="5*"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="8*"/>
             </Grid.RowDefinitions>
-            <Border
+            <TextBlock 
+                Margin="5"
                 Grid.Row="0"
                 Grid.Column="0"
-                Padding="20"
+                VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Text="Message to encode"
+                    TextAlignment="Center"
+                    Foreground="#fff"
+                    FontSize="20"
+            />
+            <Border
+                Grid.Row="1"
+                Grid.Column="0"
+                Padding="10"
             >
                 <TextBox 
                     x:Name="NotEncodedText"
                     Style="{StaticResource TextBoxStyle}"
+                    PreviewTextInput="NotEncodedText_PreviewTextInput"
                 >
                     <TextBox.Resources>
                         <Style TargetType="{x:Type Border}">
@@ -526,30 +576,66 @@
                 </TextBox>
             </Border>
             <Border
-                Padding="5"
                 Grid.Column="1"
-                Grid.Row="0"
+                Grid.Row="1"
             >
-                <Button 
-                    x:Name="EncodeButton" Click="EncodeButton_Click"
-                    MaxHeight="40"
-                    HorizontalAlignment="Center"
-                    Content="Szyfruj"
-                    Background="#05b3f7"
-                    Foreground="#fff"
-                    MinWidth="80"
+                <StackPanel 
+                    Orientation="Vertical"
+                    VerticalAlignment="Center"
                 >
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="5"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
+                    <Button 
+                        x:Name="EncodeButton"
+                        Click="EncodeButton_Click"
+                        MaxHeight="40"
+                        HorizontalAlignment="Center"
+                        Content="Encode"
+                        Background="#05b3f7"
+                        Foreground="#fff"
+                        MinWidth="80"
+                        MinHeight="30"
+                    >
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button 
+                        x:Name="ResetButton"
+                        Click="ResetButton_Click"
+                        Margin="0 10"
+                        MaxHeight="40"
+                        HorizontalAlignment="Center"
+                        Content="Reset"
+                        Background="#e81a1a"
+                        Foreground="#fff"
+                        MinWidth="80"
+                        MinHeight="30"
+                    >
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
+                
             </Border>
-            <Border
+            <TextBlock 
+                Margin="5"
                 Grid.Row="0"
                 Grid.Column="2"
-                Padding="20"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Text="Encoded message"
+                TextAlignment="Center"
+                Foreground="#fff"
+                FontSize="20"
+            />
+            <Border
+                Grid.Row="1"
+                Grid.Column="2"
+                Padding="10"
             >
                 <TextBox 
                     x:Name="EncodedText"

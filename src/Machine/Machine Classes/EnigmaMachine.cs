@@ -35,23 +35,28 @@ namespace Machine.Machine_Classes
                 char encodedCharacter = EncodeCharacter(c);
                 builder.Append(encodedCharacter);
             }
+            _plugboard.ResetLetters();
             return builder.ToString();
         }
 
         private char EncodeCharacter(char character)
         {
-            SpinRotors();
-            char encodedCharacter = _plugboard.EncodeCharacter(character);
-            for (int i = 2; i >= 0; i--)
+            if (char.IsLetter(character))
             {
-                _rotors[i].EncodeCharacterFront(ref encodedCharacter);
+                SpinRotors();
+                char encodedCharacter = _plugboard.EncodeCharacter(character);
+                for (int i = 2; i >= 0; i--)
+                {
+                    _rotors[i].EncodeCharacterFront(ref encodedCharacter);
+                }
+                encodedCharacter = _invertingRotor[encodedCharacter - 65];
+                for (int i = 0; i <= 2; i++)
+                {
+                    _rotors[i].EncodeCharacterBack(ref encodedCharacter);
+                }
+                return _plugboard.EncodeCharacter(encodedCharacter);
             }
-            encodedCharacter = _invertingRotor[encodedCharacter - 65];
-            for (int i = 0; i <= 2; i++)
-            {
-                _rotors[i].EncodeCharacterBack(ref encodedCharacter);
-            }
-            return _plugboard.EncodeCharacter(encodedCharacter);
+            return character;
         }
 
         private void SpinRotors()

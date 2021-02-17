@@ -18,5 +18,10 @@ namespace Machine.Machine_Classes
         }
 
         public char EncodeCharacter(char character) => Letters[character - 65];
+
+        public void ResetLetters()
+        {
+            Letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        }
     }
 }
